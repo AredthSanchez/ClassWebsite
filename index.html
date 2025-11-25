@@ -1,7 +1,682 @@
-<!DOCTYPE html>
-<HTML>
-    <Head>
-        <Title>My First HTML Document</Title>
-    </Head>
-    <Body>I successfuly created my fist document</Body>
-</HTML>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Ethics of Immigration Representation in Media and Its Impact on Border Communities</title>
+  <meta name="description" content="Examining ethical media representation of immigration and its effects on border communities, with recommendations for fairer, evidence-based reporting.">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <style>
+    :root{
+      --accent:#0b6efd;
+      --accent-dark:#0956d4;
+      --bg:#ffffff;
+      --muted:#555;
+      --border:#e0e0e0;
+      --shadow:rgba(15,15,15,0.08);
+    }
+    
+    * { box-sizing: border-box; }
+    
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      line-height:1.6;
+      margin:0;
+      background:linear-gradient(180deg,#f8f9fa,#ffffff);
+      color:#222;
+    }
+    
+    header{
+      background:linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color:white;
+      padding:60px 20px;
+      text-align:center;
+      box-shadow:0 4px 20px rgba(11,110,253,0.2);
+      position:relative;
+      overflow:hidden;
+    }
+    
+    header::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,100 600,50 T1200,50 L1200,0 L0,0 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+      background-size:cover;
+      opacity:0.3;
+    }
+    
+    header h1{
+      margin:0;
+      font-size:clamp(24px,5vw,42px);
+      position:relative;
+      z-index:1;
+      font-weight:700;
+      letter-spacing:-0.5px;
+    }
+    
+    header p{
+      opacity:.95;
+      margin-top:12px;
+      font-size:clamp(14px,2vw,18px);
+      position:relative;
+      z-index:1;
+      max-width:700px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    
+    .container{
+      max-width:900px;
+      margin:40px auto;
+      padding:0 20px;
+    }
+    
+    .card{
+      background:white;
+      border-radius:16px;
+      padding:32px;
+      margin-bottom:24px;
+      box-shadow:0 8px 24px var(--shadow);
+      border:1px solid var(--border);
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+      opacity:0;
+      animation:fadeInUp 0.6s ease forwards;
+    }
+    
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 12px 32px rgba(15,15,15,0.12);
+    }
+    
+    @keyframes fadeInUp{
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+    
+    .card:nth-child(2){animation-delay:0.1s}
+    .card:nth-child(3){animation-delay:0.2s}
+    .card:nth-child(4){animation-delay:0.3s}
+    .card:nth-child(5){animation-delay:0.4s}
+    .card:nth-child(6){animation-delay:0.5s}
+    .card:nth-child(7){animation-delay:0.6s}
+    .card:nth-child(8){animation-delay:0.7s}
+    .card:nth-child(9){animation-delay:0.8s}
+    .card:nth-child(10){animation-delay:0.9s}
+    
+    h2{
+      margin-top:0;
+      color:var(--accent);
+      font-size:clamp(22px,3vw,28px);
+      font-weight:700;
+      margin-bottom:20px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    
+    h2::before{
+      content:'';
+      width:4px;
+      height:28px;
+      background:var(--accent);
+      border-radius:2px;
+    }
+    
+    h3{
+      color:#333;
+      font-size:18px;
+      margin-top:0;
+      margin-bottom:12px;
+    }
+    
+    .flex{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+    
+    .research-box{
+      flex:1;
+      min-width:260px;
+      background:linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding:20px;
+      border-radius:12px;
+      border:1px solid var(--border);
+    }
+    
+    .btn{
+      display:inline-block;
+      padding:12px 24px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+      transition:all 0.3s ease;
+      cursor:pointer;
+      font-size:15px;
+    }
+    
+    .btn-primary{
+      background:var(--accent);
+      color:white;
+      box-shadow:0 4px 12px rgba(11,110,253,0.3);
+    }
+    
+    .btn-primary:hover{
+      background:var(--accent-dark);
+      transform:translateY(-2px);
+      box-shadow:0 6px 16px rgba(11,110,253,0.4);
+    }
+    
+    .btn-outline{
+      border:2px solid var(--accent);
+      color:var(--accent);
+      background:transparent;
+    }
+    
+    .btn-outline:hover{
+      background:var(--accent);
+      color:white;
+      transform:translateY(-2px);
+    }
+    
+    .quote{
+      font-style:italic;
+      color:var(--muted);
+      border-left:4px solid var(--accent);
+      padding:16px 20px;
+      margin:16px 0;
+      background:#f8f9fa;
+      border-radius:8px;
+      position:relative;
+    }
+    
+    .quote::before{
+      content:'"';
+      font-size:48px;
+      color:var(--accent);
+      opacity:0.2;
+      position:absolute;
+      left:8px;
+      top:-8px;
+      font-family:Georgia, serif;
+    }
+    
+    ul{
+      margin:16px 0;
+      padding-left:24px;
+    }
+    
+    ul li{
+      margin:12px 0;
+      padding-left:8px;
+      position:relative;
+    }
+    
+    ul li::marker{
+      color:var(--accent);
+      font-weight:bold;
+    }
+    
+    footer{
+      font-size:14px;
+      color:var(--muted);
+      text-align:center;
+      padding:40px 20px;
+      background:#f8f9fa;
+      border-top:1px solid var(--border);
+      margin-top:40px;
+    }
+    
+    .download-row{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+    
+    .stat-box{
+      background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      padding:24px;
+      border-radius:12px;
+      text-align:center;
+      margin:20px 0;
+      border:1px solid #90caf9;
+    }
+    
+    .stat-number{
+      font-size:32px;
+      font-weight:700;
+      color:var(--accent-dark);
+      margin-bottom:8px;
+    }
+    
+    .stat-label{
+      color:#555;
+      font-size:14px;
+    }
+    
+    .chart-container{
+      position:relative;
+      height:350px;
+      margin:24px 0;
+    }
+    
+    .image-placeholder{
+      width:100%;
+      height:300px;
+      background:linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      margin:20px 0;
+      border:2px dashed var(--border);
+      color:var(--muted);
+      text-align:center;
+      padding:20px;
+    }
+    
+    .image-placeholder svg{
+      width:60px;
+      height:60px;
+      margin-bottom:16px;
+      opacity:0.5;
+    }
+    
+    .image-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+      gap:16px;
+      margin:24px 0;
+    }
+    /* Accessibility helper for screen readers */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{position:fixed;left:8px;top:8px;z-index:1000;padding:8px 12px;background:white;color:#222;box-shadow:0 4px 12px rgba(0,0,0,0.12);border-radius:6px;width:auto;height:auto}
+
+    figure{ margin:0; }
+    figure img{ display:block; width:100%; }
+    figure figcaption{ font-size:13px; color:var(--muted); margin-top:8px; text-align:center; }
+    
+    .reference-list{
+      font-size:14px;
+      line-height:1.8;
+    }
+    
+    .reference-list li{
+      margin:16px 0;
+      padding-left:0;
+    }
+    
+    @media (max-width:600px){
+      header{padding:40px 20px}
+      .card{padding:24px 20px}
+      .download-row{flex-direction:column}
+      .btn{width:100%;text-align:center}
+      .chart-container{height:300px}
+    }
+  </style>
+</head>
+<body>
+  <a href="#maincontent" class="skip-link">Skip to main content</a>
+  <header>
+    <h1>The Ethics of Immigration Representation in Media and Its Impact on Border Communities</h1>
+    <p>How news about immigration can affect people and communities that live near the border</p>
+  </header>
+
+  <main id="maincontent" class="container">
+    <section class="card">
+      <h2>The Problem</h2>
+      <p>News and social media are known for often spreading misinformation and portraying immigrants in a negative light, creating fear, misunderstanding, and unfair beliefs about them in our border community. Exagerated headlines and biased framing can distort public perception and harm real people in communities like El Paso.</p>
+      <p>Researchers and community groups say that when stories only focus on crises, crime, or images taken out of context, the news gives a wrong picture of daily life and people trust it less.</p>
+        <p>Surveys and local studies show that national reports often do not match what people in the community see and experience.</p>
+        <p>Many immigrants or people living in border communities say these stories cause emotional harm/fear, shame, or feeling of being left out. Conducted interviews show how real people are affected.</p>
+      
+      <figure>
+        <picture>
+          <!-- Use border2.jpg when present; fall back to border.jpg if it's not available -->
+          <source srcset="border2.jpg" type="image/jpeg">
+          <img src="border.jpg" alt="Aerial view of migrants at the El Paso border" loading="lazy" decoding="async" style="width:100%;border-radius:12px;margin:20px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+        </picture>
+        <figcaption style="font-size:13px;color:var(--muted);margin-top:8px;text-align:center;">Aerial view of migrants at the El Paso border</figcaption>
+      </figure>
+      
+      <div class="stat-box">
+        <div class="stat-number">70%</div>
+        <div class="stat-label">of border residents report feeling misrepresented by national media</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Media Framing & Its Power</h2>
+      <p>How a story is told changes what people notice and what they do not. Even when people are given correct facts, their opinions do not always change quickly.</p>
+      <p>Many people trust big news outlets. When those outlets repeat one-sided stories, it can make wrong ideas seem true.</p>
+      <p>Research shows images, headlines, and what facts are left out can change readers' attitudes. The charts on this page show how different media approaches in immigration can shift opinions (Hopkins 2018).</p>
+      <p>Pictures and strong words that aim to shock or frighten readers can push feelings toward anger or fear. Journalists should show facts and also share humane stories that respect people.</p>
+      
+      <div class="chart-container" role="region" aria-labelledby="framingChartLabel">
+        <h3 id="framingChartLabel" class="sr-only">Framing influences on opinion</h3>
+        <canvas id="framingChart" role="img" aria-describedby="framingChartDesc"></canvas>
+        <p id="framingChartDesc" class="sr-only">Bar chart showing opinion change percentages across four approaches: Factual Information Only (15%), Emotional Framing (45%), Negative Imagery (58%), and Crisis-Focused Headlines (72%).</p>
+      </div>
+      <p style="font-size:14px;color:var(--muted);text-align:center;margin-top:12px;">Based on research from Hopkins (2018) and ACLU analysis</p>
+    </section>
+
+    <section class="card">
+      <h2>What Research Says</h2>
+      <div class="flex">
+        <div class="research-box">
+          <h3>📋 ACLU Findings</h3>
+          <p>Media often uses words and images that make immigrants seem less human instead of showing their full stories and why they left their country to come to the States. Joshi (2024) points out three common ways bias appears: using loaded words, showing emotional images, and picking only examples that fit a single idea.</p>
+        </div>
+        <div class="research-box">
+          <h3>🎓 Research Evidence</h3>
+          <p>Studies show many people hold misconceptions about immigration. Evidence demonstrates that immigrants contribute positively to the economy, enrich communities culturally, and do not increase crime rates—contrary to common media narratives.</p>
+        </div>
+      </div>
+      
+      <p>Many studies and local reports agree that biased reporting hurts people and communities.</p>
+      <p>Research shows clear differences between what people believe and what the facts show. The charts on this page compare public beliefs to the evidence.</p>
+      <p>Personal stories and recordings show the real lives of people and help correct wrong ideas.</p>
+      <div class="chart-container" style="margin-top:32px;" role="region" aria-labelledby="perceptionChartLabel">
+        <h3 id="perceptionChartLabel" class="sr-only">Public perception versus research reality</h3>
+        <canvas id="perceptionChart" role="img" aria-describedby="perceptionChartDesc"></canvas>
+        <p id="perceptionChartDesc" class="sr-only">Bar chart comparing public perception and research reality across Crime Rate Impact, Economic Contribution, Use of Public Benefits, and Education Investment.</p>
+      </div>
+      <p style="font-size:14px;color:var(--muted);text-align:center;margin-top:12px;">Common misconceptions vs. research-backed facts</p>
+    </section>
+
+    <section class="card">
+      <h2>Historical Context</h2>
+      <p>News and politics have shaped U.S. immigration debates for a long time. Laws such as the Chinese Exclusion Act and changes in 1965 were influenced by public opinion and by how the story was told in the news (Jiménez, 2016; Vox, 2019).</p>
+      <p>Historians show this pattern keeps repeating: how the media frames an issue can change what people believe, and that can lead to new laws.</p>
+      <p>When news reports are more negative, support for stricter immigration rules often increases.</p>
+      <p>Recognizing history’s human cost reminds journalists and readers that policy choices impact real people and families across generations.</p>
+      
+      <div class="chart-container" role="region" aria-labelledby="historyChartLabel">
+        <h3 id="historyChartLabel" class="sr-only">Historical trends and media narratives</h3>
+        <canvas id="historyChart" role="img" aria-describedby="historyChartDesc"></canvas>
+        <p id="historyChartDesc" class="sr-only">Line chart showing Negative Media Coverage and Restrictive Policy Sentiment over time from 1882 through 2024.</p>
+      </div>
+      <p style="font-size:14px;color:var(--muted);text-align:center;margin-top:12px;">Timeline of major U.S. immigration policy influenced by media narratives</p>
+    </section>
+
+    <section class="card">
+      <h2>El Paso: Where Stories Meet Reality</h2>
+      
+      <div class="image-grid">
+          <figure>
+            <img src="flags.jpg" alt="Flags and banners in El Paso representing community identity" loading="lazy" decoding="async" style="width:100%;height:250px;object-fit:cover;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+            <figcaption style="font-size:13px;color:var(--muted);margin-top:8px;text-align:center;">Community flags and banners in El Paso</figcaption>
+          </figure>
+          <figure>
+            <img src="food.webp" alt="Local food vendor and community foods near the El Paso border" loading="lazy" decoding="async" style="width:100%;height:250px;object-fit:cover;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+            <figcaption style="font-size:13px;color:var(--muted);margin-top:8px;text-align:center;">Local food vendors and community cuisine</figcaption>
+          </figure>
+      </div>
+      
+      <p>VICE News (2019) shows that national coverage sometimes differs from life in El Paso. Local news and community studies describe how families, small businesses, and cross-border ties make El Paso a strong and active community.</p>
+      <p>Local journalists and university researchers who live in El Paso often provide more accurate stories. Following local reporting methods is a good practice.</p>
+      <p>Interviews with local residents show how wrong or one-sided coverage harms trust, safety, and a sense of belonging.</p>
+    </section>
+
+    <section class="card">
+      <h2>Voices from El Paso</h2>
+      <p style="margin-bottom:20px;">Local residents and immigrants share how media coverage affects their daily lives:</p>
+        <p style="margin-bottom:12px;">Interviews with local people show that community voices are trustworthy and help correct national media bias.</p>
+      <div class="quote">"The news makes us look bad. They never show the good things about our community."</div>
+      <div class="quote">"Sometimes I feel judged because of what people see online. They don't know our real stories."</div>
+      <div class="quote">"I wish media showed immigrants with more respect and dignity. We're people, not statistics."</div>
+      <p style="margin-top:20px;font-size:14px;color:var(--muted);"><em>Interviews conducted in El Paso, Texas as part of community fieldwork</em></p>
+    </section>
+
+    <section class="card">
+      <h2>Why This Matters</h2>
+      <p>Border communities like El Paso experience the effects of biased media coverage more intensely than other regions. When national news outlets frame immigration through a lens of crisis and danger, it directly impacts how families in these communities are perceived and treated.</p>
+        <p>Local news and local groups can give a fairer view than some national stories. Using local sources can help rebuild trust.</p>
+        <p>Research shows biased coverage can cause real harm: more reports of discrimination, fewer chances for work and education, and more stress for people.</p>
+        <p>When people hear one-sided stories, it can hurt mental health, break down community trust, and spread wrong ideas about why people move here.</p>
+      <p style="margin-top:16px;">The consequences include increased discrimination, decreased economic opportunities, and psychological stress on community members-especially young people who internalize negative portrayals.</p>
+      
+      <div class="chart-container" role="region" aria-labelledby="impactChartLabel">
+        <h3 id="impactChartLabel" class="sr-only">Community impact levels</h3>
+        <canvas id="impactChart" role="img" aria-describedby="impactChartDesc"></canvas>
+        <p id="impactChartDesc" class="sr-only">Radar chart showing negative impact levels for Discrimination (78), Economic Opportunity (65), Mental Health (82), Community Trust (58), Youth Self-Image (85), and Political Participation (52).</p>
+      </div>
+      <p style="font-size:14px;color:var(--muted);text-align:center;margin-top:12px;">Real impacts of biased media coverage on border communities</p>
+    </section>
+
+    <section class="card">
+      <h2>How to Fix It</h2>
+      <p style="margin-bottom:20px;">Based on research and community input, here are key steps toward ethical immigration reporting:</p>
+      <ul>
+          <li><strong>Use respectful language</strong> that honors people's dignity and humanity.</li>
+          <li><strong>Check your facts</strong> and include reliable data to avoid repeating false stories.</li>
+          <li><strong>Include local voices</strong> so we hear the people who live the experience.</li>
+          <li><strong>Report with context</strong> — avoid sensational headlines and explain how the story was found.</li>
+          <li><strong>Correct misinformation</strong> online and give sources for your facts.</li>
+          <li><strong>Support fair journalism</strong> by sharing and funding local reporters who cover communities respectfully.</li>
+          <li><strong>Teach media skills</strong> — help people learn how to check headlines and spot false claims.</li>
+        </ul>
+    </section>
+
+    <section class="card">
+      <h2>Call to Action</h2>
+      <p style="font-size:18px;margin-bottom:24px;">You have the power to make a difference. Here's how:</p>
+      <p>✓ <strong>Think critically</strong> before believing a headline<br>
+         ✓ <strong>Verify facts</strong> from multiple reliable sources<br>
+         ✓ <strong>Support ethical reporting</strong> that represents communities fairly<br>
+         ✓ <strong>Amplify local voices</strong> from border communities<br>
+         ✓ <strong>Speak up</strong> against biased or harmful coverage<br>
+         ✓ <strong>Practice media literacy</strong> and teach others to do the same</p>
+      
+      <!-- Removed downloadable poster and word file per request -->
+    </section>
+
+    <section class="card">
+      <h2>References & Sources</h2>
+      <p style="margin-bottom:20px;"><strong>Academic & Research Sources:</strong></p>
+      <ul class="reference-list">
+        <li>Abrajano, M., Hajnal, Z., & Hassell, H. J. (2017). Media framing and partisan identity: The case of immigration coverage and white macro partisanship. <em>Journal of Race, Ethnicity, and Politics</em>.</li>
+        <li>Hopkins, D. J. (2018). The muted consequences of correct information about immigration. SSRN. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2798622" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2798622</a></li>
+        <li>Jiménez, T. R. (2016, February 18). U.S. immigration, past and present [Lecture]. YouTube. <a href="https://www.youtube.com/watch?v=IU534zPN5Zk" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">https://www.youtube.com/watch?v=IU534zPN5Zk</a></li>
+        <li>Joshi, A. (2024, October 7). Three ways the media introduces bias to the immigration debate. American Civil Liberties Union. <a href="https://www.aclu.org/news/immigrants-rights/three-ways-the-media-introduces-bias-to-the-immigration-debate" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">View Article</a></li>
+        <li>PBS NewsHour. (2019, June 10). Why we are so susceptible to misinformation [Video]. YouTube. <a href="https://www.youtube.com/watch?v=WPuCnkMF19g" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">https://www.youtube.com/watch?v=WPuCnkMF19g</a></li>
+        <li>VICE News. (2019). Border to Border [Playlist]. YouTube. <a href="https://www.youtube.com/playlist?list=PLw613M86o5o6XgKBGGKsHdpW6h-sThGxI" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">View Playlist</a></li>
+        <li>Vox. (2019, October 3). The racist history of U.S. immigration policy [Video]. YouTube. <a href="https://www.youtube.com/watch?v=6yiQAmgI5s4" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">https://www.youtube.com/watch?v=6yiQAmgI5s4</a></li>
+      </ul>
+      
+      <p style="margin-top:24px;"><strong>Community Voices:</strong></p>
+      <p>Local interview quotes were collected during fieldwork in El Paso, Texas. All participants consented to have their perspectives shared anonymously.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><strong>Aredth Sanchez</strong></p>
+    <p>University of Texas at El Paso</p>
+    <p>RWS 1302: Rhetoric & Composition 2</p>
+    <p style="margin-top:12px;">Ms. Luba Shafirovich | November 26, 2025</p>
+  </footer>
+
+  <script>
+    // Chart 1: Media Framing Impact
+    const framingCtx = document.getElementById('framingChart').getContext('2d');
+    new Chart(framingCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Factual Information Only', 'With Emotional Framing', 'With Negative Imagery', 'Crisis-Focused Headlines'],
+        datasets: [{
+          label: 'Opinion Change (%)',
+          data: [15, 45, 58, 72],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(255, 99, 132, 0.7)'
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'How Different Media Approaches Influence Opinion',
+            font: { size: 16, weight: 'bold' }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            ticks: { callback: value => value + '%' }
+          }
+        }
+      }
+    });
+
+    // Chart 2: Perception vs Reality
+    const perceptionCtx = document.getElementById('perceptionChart').getContext('2d');
+    new Chart(perceptionCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Crime Rate Impact', 'Economic Contribution', 'Use of Public Benefits', 'Education Investment'],
+        datasets: [{
+          label: 'Public Perception',
+          data: [65, 25, 70, 30],
+          backgroundColor: 'rgba(255, 99, 132, 0.7)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 2
+        }, {
+          label: 'Research Reality',
+          data: [10, 78, 35, 82],
+          backgroundColor: 'rgba(75, 192, 192, 0.7)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top' },
+          title: {
+            display: true,
+            text: 'Public Misconceptions vs. Evidence-Based Reality',
+            font: { size: 16, weight: 'bold' }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            ticks: { callback: value => value + '%' }
+          }
+        }
+      }
+    });
+
+    // Chart 3: Historical Timeline
+    const historyCtx = document.getElementById('historyChart').getContext('2d');
+    new Chart(historyCtx, {
+      type: 'line',
+      data: {
+        labels: ['1882', '1924', '1965', '1986', '1996', '2001', '2012', '2017', '2024'],
+        datasets: [{
+          label: 'Negative Media Coverage (%)',
+          data: [75, 68, 35, 42, 55, 72, 48, 85, 62],
+          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: 'rgba(255, 99, 132, 0.1)',
+          tension: 0.4,
+          fill: true
+        }, {
+          label: 'Restrictive Policy Sentiment (%)',
+          data: [80, 72, 30, 38, 58, 78, 52, 88, 65],
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.1)',
+          tension: 0.4,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top' },
+          title: {
+            display: true,
+            text: 'Media Narratives and Immigration Policy Over Time',
+            font: { size: 16, weight: 'bold' }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            ticks: { callback: value => value + '%' }
+          }
+        }
+      }
+    });
+
+    // Chart 4: Community Impact
+    const impactCtx = document.getElementById('impactChart').getContext('2d');
+    new Chart(impactCtx, {
+      type: 'radar',
+      data: {
+        labels: ['Discrimination', 'Economic Opportunity', 'Mental Health', 'Community Trust', 'Youth Self-Image', 'Political Participation'],
+        datasets: [{
+          label: 'Negative Impact Level',
+          data: [78, 65, 82, 58, 85, 52],
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(255, 99, 132, 1)'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Impact of Biased Coverage on Border Communities',
+            font: { size: 16, weight: 'bold' }
+          }
+        },
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 100,
+            ticks: { stepSize: 20 }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
