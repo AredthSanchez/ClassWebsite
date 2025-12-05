@@ -8,32 +8,46 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <style>
     :root{
-      --accent:#0b6efd;
-      --accent-dark:#0956d4;
-      --bg:#ffffff;
-      --muted:#555;
-      --border:#e0e0e0;
-      --shadow:rgba(15,15,15,0.08);
+      --accent:#4a9eff;
+      --accent-dark:#2a7eff;
+      --accent-light:#6bb1ff;
+      --chart-1:#ff6b9d;
+      --chart-2:#9d4aff;
+      --chart-3:#4aff9d;
+      --chart-4:#ff9d4a;
+      --bg:#1e1e2e;
+      --bg-card:#2a2a3a;
+      --bg-darker:#161622;
+      --bg-lighter:#353547;
+      --text:#e6e6e6;
+      --text-muted:#b0b0c0;
+      --text-light:#f0f0f5;
+      --border:#3a3a4a;
+      --border-light:#4a4a5a;
+      --shadow:rgba(0,0,0,0.25);
+      --shadow-accent:rgba(74, 158, 255, 0.15);
     }
     
     * { box-sizing: border-box; }
     
     body{
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       line-height:1.6;
       margin:0;
-      background:linear-gradient(180deg,#f8f9fa,#ffffff);
-      color:#222;
+      background:linear-gradient(180deg, var(--bg-darker) 0%, var(--bg) 100%);
+      color:var(--text);
+      min-height:100vh;
     }
     
     header{
-      background:linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-      color:white;
-      padding:60px 20px;
+      background:linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-card) 100%);
+      color:var(--text-light);
+      padding:70px 20px 60px;
       text-align:center;
-      box-shadow:0 4px 20px rgba(11,110,253,0.2);
       position:relative;
       overflow:hidden;
+      border-bottom:1px solid var(--border);
+      box-shadow:0 4px 30px rgba(0,0,0,0.3);
     }
     
     header::before{
@@ -43,29 +57,142 @@
       left:0;
       right:0;
       bottom:0;
-      background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,100 600,50 T1200,50 L1200,0 L0,0 Z" fill="rgba(255,255,255,0.05)"/></svg>');
-      background-size:cover;
-      opacity:0.3;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(74, 158, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(157, 74, 255, 0.08) 0%, transparent 50%),
+        linear-gradient(45deg, transparent 30%, rgba(74, 255, 157, 0.03) 100%);
+      pointer-events:none;
     }
     
-    header h1{
-      margin:0;
-      font-size:clamp(24px,5vw,42px);
+    header::after{
+      content:'';
+      position:absolute;
+      bottom:0;
+      left:0;
+      right:0;
+      height:4px;
+      background:linear-gradient(90deg, 
+        var(--chart-1) 0%,
+        var(--chart-2) 25%,
+        var(--chart-3) 50%,
+        var(--chart-4) 75%,
+        var(--accent) 100%
+      );
+      opacity:0.8;
+    }
+    
+    .header-content{
       position:relative;
-      z-index:1;
-      font-weight:700;
+      z-index:2;
+      max-width:900px;
+      margin:0 auto;
+    }
+    
+    .title-wrapper{
+      position:relative;
+      margin-bottom:20px;
+    }
+    
+    .title-badge{
+      display:inline-block;
+      background:rgba(74, 158, 255, 0.15);
+      color:var(--accent-light);
+      padding:8px 20px;
+      border-radius:20px;
+      font-size:14px;
+      font-weight:600;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      margin-bottom:25px;
+      border:1px solid rgba(74, 158, 255, 0.3);
+      backdrop-filter:blur(10px);
+    }
+    
+    .title-main{
+      font-size:clamp(28px, 5vw, 48px);
+      font-weight:800;
+      margin:0 0 15px 0;
+      line-height:1.1;
       letter-spacing:-0.5px;
+      background:linear-gradient(135deg, 
+        var(--text-light) 0%, 
+        var(--accent-light) 50%, 
+        var(--text-light) 100%
+      );
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow:0 2px 10px rgba(0,0,0,0.2);
+      position:relative;
     }
     
-    header p{
-      opacity:.95;
-      margin-top:12px;
-      font-size:clamp(14px,2vw,18px);
-      position:relative;
-      z-index:1;
+    .title-main::after{
+      content:'';
+      position:absolute;
+      bottom:-10px;
+      left:50%;
+      transform:translateX(-50%);
+      width:100px;
+      height:3px;
+      background:linear-gradient(90deg, transparent, var(--accent), transparent);
+      border-radius:2px;
+    }
+    
+    .title-subtitle{
+      font-size:clamp(16px, 2.5vw, 22px);
+      color:var(--text-muted);
+      margin:25px auto 0;
       max-width:700px;
-      margin-left:auto;
-      margin-right:auto;
+      line-height:1.4;
+      font-weight:300;
+      padding:0 20px;
+      position:relative;
+    }
+    
+    .title-subtitle::before{
+      content:'「';
+      position:absolute;
+      left:0;
+      top:0;
+      color:var(--accent);
+      opacity:0.5;
+      font-size:24px;
+    }
+    
+    .title-subtitle::after{
+      content:'」';
+      position:absolute;
+      right:0;
+      top:0;
+      color:var(--accent);
+      opacity:0.5;
+      font-size:24px;
+    }
+    
+    .title-decoration{
+      display:flex;
+      justify-content:center;
+      gap:15px;
+      margin-top:30px;
+      opacity:0.6;
+    }
+    
+    .title-decoration span{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--accent);
+      animation:pulse 2s infinite;
+    }
+    
+    .title-decoration span:nth-child(1){animation-delay:0s; background:var(--chart-1)}
+    .title-decoration span:nth-child(2){animation-delay:0.3s; background:var(--chart-2)}
+    .title-decoration span:nth-child(3){animation-delay:0.6s; background:var(--chart-3)}
+    .title-decoration span:nth-child(4){animation-delay:0.9s; background:var(--chart-4)}
+    
+    @keyframes pulse{
+      0%, 100%{opacity:0.3; transform:scale(1)}
+      50%{opacity:1; transform:scale(1.3)}
     }
     
     .container{
@@ -75,20 +202,22 @@
     }
     
     .card{
-      background:white;
+      background:var(--bg-card);
       border-radius:16px;
       padding:32px;
       margin-bottom:24px;
       box-shadow:0 8px 24px var(--shadow);
       border:1px solid var(--border);
-      transition:transform 0.3s ease, box-shadow 0.3s ease;
+      transition:all 0.3s ease;
       opacity:0;
       animation:fadeInUp 0.6s ease forwards;
+      backdrop-filter:blur(10px);
     }
     
     .card:hover{
       transform:translateY(-4px);
-      box-shadow:0 12px 32px rgba(15,15,15,0.12);
+      box-shadow:0 12px 32px var(--shadow-accent);
+      border-color:var(--accent);
     }
     
     @keyframes fadeInUp{
@@ -114,7 +243,7 @@
     
     h2{
       margin-top:0;
-      color:var(--accent);
+      color:var(--accent-light);
       font-size:clamp(22px,3vw,28px);
       font-weight:700;
       margin-bottom:20px;
@@ -129,10 +258,11 @@
       height:28px;
       background:var(--accent);
       border-radius:2px;
+      box-shadow:0 0 10px var(--accent);
     }
     
     h3{
-      color:#333;
+      color:var(--text-light);
       font-size:18px;
       margin-top:0;
       margin-bottom:12px;
@@ -147,10 +277,17 @@
     .research-box{
       flex:1;
       min-width:260px;
-      background:linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      background:linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-card) 100%);
       padding:20px;
       border-radius:12px;
-      border:1px solid var(--border);
+      border:1px solid var(--border-light);
+      transition:all 0.3s ease;
+    }
+    
+    .research-box:hover{
+      transform:translateY(-2px);
+      border-color:var(--accent);
+      box-shadow:0 4px 12px var(--shadow-accent);
     }
     
     .btn{
@@ -162,18 +299,19 @@
       transition:all 0.3s ease;
       cursor:pointer;
       font-size:15px;
+      border:none;
     }
     
     .btn-primary{
-      background:var(--accent);
+      background:linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
       color:white;
-      box-shadow:0 4px 12px rgba(11,110,253,0.3);
+      box-shadow:0 4px 12px var(--shadow-accent);
     }
     
     .btn-primary:hover{
-      background:var(--accent-dark);
+      background:linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
       transform:translateY(-2px);
-      box-shadow:0 6px 16px rgba(11,110,253,0.4);
+      box-shadow:0 6px 16px var(--shadow-accent);
     }
     
     .btn-outline{
@@ -190,13 +328,19 @@
     
     .quote{
       font-style:italic;
-      color:var(--muted);
+      color:var(--text-muted);
       border-left:4px solid var(--accent);
       padding:16px 20px;
       margin:16px 0;
-      background:#f8f9fa;
+      background:var(--bg-lighter);
       border-radius:8px;
       position:relative;
+      transition:all 0.3s ease;
+    }
+    
+    .quote:hover{
+      border-left-color:var(--accent-light);
+      background:var(--bg-card);
     }
     
     .quote::before{
@@ -219,6 +363,7 @@
       margin:12px 0;
       padding-left:8px;
       position:relative;
+      color:var(--text);
     }
     
     ul li::marker{
@@ -228,10 +373,10 @@
     
     footer{
       font-size:14px;
-      color:var(--muted);
+      color:var(--text-muted);
       text-align:center;
       padding:40px 20px;
-      background:#f8f9fa;
+      background:var(--bg-darker);
       border-top:1px solid var(--border);
       margin-top:40px;
     }
@@ -244,36 +389,57 @@
     }
     
     .stat-box{
-      background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      background:linear-gradient(135deg, rgba(74, 158, 255, 0.1) 0%, rgba(42, 126, 255, 0.2) 100%);
       padding:24px;
       border-radius:12px;
       text-align:center;
       margin:20px 0;
-      border:1px solid #90caf9;
+      border:1px solid var(--accent);
+      position:relative;
+      overflow:hidden;
+    }
+    
+    .stat-box::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:linear-gradient(135deg, transparent 0%, rgba(74, 158, 255, 0.05) 100%);
     }
     
     .stat-number{
       font-size:32px;
       font-weight:700;
-      color:var(--accent-dark);
+      color:var(--accent-light);
       margin-bottom:8px;
+      position:relative;
+      z-index:1;
+      text-shadow:0 2px 4px rgba(0,0,0,0.2);
     }
     
     .stat-label{
-      color:#555;
+      color:var(--text);
       font-size:14px;
+      position:relative;
+      z-index:1;
     }
     
     .chart-container{
       position:relative;
       height:350px;
       margin:24px 0;
+      background:var(--bg-lighter);
+      border-radius:12px;
+      padding:20px;
+      border:1px solid var(--border-light);
     }
     
     .image-placeholder{
       width:100%;
       height:300px;
-      background:linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+      background:linear-gradient(135deg, var(--bg-lighter) 0%, var(--bg-card) 100%);
       border-radius:12px;
       display:flex;
       flex-direction:column;
@@ -281,7 +447,7 @@
       justify-content:center;
       margin:20px 0;
       border:2px dashed var(--border);
-      color:var(--muted);
+      color:var(--text-muted);
       text-align:center;
       padding:20px;
     }
@@ -299,14 +465,39 @@
       gap:16px;
       margin:24px 0;
     }
+    
     /* Accessibility helper for screen readers */
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
-    .skip-link:focus{position:fixed;left:8px;top:8px;z-index:1000;padding:8px 12px;background:white;color:#222;box-shadow:0 4px 12px rgba(0,0,0,0.12);border-radius:6px;width:auto;height:auto}
+    .skip-link:focus{position:fixed;left:8px;top:8px;z-index:1000;padding:8px 12px;background:var(--bg-card);color:var(--text);box-shadow:0 4px 12px var(--shadow);border-radius:6px;width:auto;height:auto;border:1px solid var(--accent)}
 
-    figure{ margin:0; }
-    figure img{ display:block; width:100%; }
-    figure figcaption{ font-size:13px; color:var(--muted); margin-top:8px; text-align:center; }
+    figure{ 
+      margin:0;
+      transition:all 0.3s ease;
+    }
+    
+    figure:hover{
+      transform:translateY(-2px);
+    }
+    
+    figure img{ 
+      display:block; 
+      width:100%;
+      border-radius:12px;
+      box-shadow:0 4px 12px var(--shadow);
+      transition:all 0.3s ease;
+    }
+    
+    figure:hover img{
+      box-shadow:0 6px 16px var(--shadow-accent);
+    }
+    
+    figure figcaption{ 
+      font-size:13px; 
+      color:var(--text-muted); 
+      margin-top:8px; 
+      text-align:center; 
+    }
     
     .reference-list{
       font-size:14px;
@@ -316,22 +507,89 @@
     .reference-list li{
       margin:16px 0;
       padding-left:0;
+      color:var(--text);
+      padding:8px 0;
+      border-bottom:1px solid var(--border);
+    }
+    
+    .reference-list li:last-child{
+      border-bottom:none;
+    }
+    
+    a {
+      color:var(--accent);
+      text-decoration:none;
+      transition:all 0.3s ease;
+    }
+    
+    a:hover {
+      color:var(--accent-light);
+      text-decoration:underline;
+    }
+    
+    p{
+      color:var(--text);
+    }
+    
+    strong{
+      color:var(--text-light);
+    }
+    
+    .highlight{
+      background:linear-gradient(135deg, rgba(74, 158, 255, 0.1) 0%, transparent 50%);
+      padding:2px 4px;
+      border-radius:4px;
+    }
+    
+    .source-link{
+      display:inline-block;
+      margin-top:10px;
+      font-size:14px;
+      color:var(--accent);
+      text-decoration:none;
+      padding:4px 8px;
+      border-radius:4px;
+      background:rgba(74, 158, 255, 0.1);
+      transition:all 0.3s ease;
+    }
+    
+    .source-link:hover{
+      background:rgba(74, 158, 255, 0.2);
+      text-decoration:none;
     }
     
     @media (max-width:600px){
-      header{padding:40px 20px}
+      header{padding:50px 20px 40px}
       .card{padding:24px 20px}
       .download-row{flex-direction:column}
       .btn{width:100%;text-align:center}
-      .chart-container{height:300px}
+      .chart-container{
+        height:300px;
+        padding:10px;
+      }
+      .title-subtitle::before,
+      .title-subtitle::after{
+        display:none;
+      }
     }
   </style>
 </head>
 <body>
   <a href="#maincontent" class="skip-link">Skip to main content</a>
   <header>
-    <h1>The Ethics of Immigration Representation in Media and Its Impact on Border Communities</h1>
-    <p>How news about immigration can affect people and communities that live near the border</p>
+    <div class="header-content">
+      <div class="title-badge">Research Report</div>
+      <div class="title-wrapper">
+        <h1 class="title-main">The Ethics of Immigration Representation in Media and Its Impact on Border Communities</h1>
+      </div>
+      <p class="title-subtitle">How news about immigration can affect people and communities that live near the border</p>
+      <div class="title-decoration">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
   </header>
 
   <main id="maincontent" class="container">
@@ -346,9 +604,9 @@
         <picture>
           <!-- Use border2.jpg when present; fall back to border.jpg if it's not available -->
           <source srcset="border2.jpg" type="image/jpeg">
-          <img src="border.jpg" alt="Aerial view of migrants at the El Paso border" loading="lazy" decoding="async" style="width:100%;border-radius:12px;margin:20px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+          <img src="border.jpg" alt="Aerial view of migrants at the El Paso border" loading="lazy" decoding="async">
         </picture>
-        <figcaption style="font-size:13px;color:var(--muted);margin-top:8px;text-align:center;">Aerial view of migrants at the El Paso border</figcaption>
+        <figcaption>Aerial view of migrants at the El Paso border</figcaption>
       </figure>
       
       <div class="stat-box">
@@ -361,7 +619,7 @@
       <h2>Media Framing & Its Power</h2>
       <p>How a story is told changes what people notice and what they do not. Even when people are given correct facts, their opinions do not always change quickly.</p>
       <p>Many people trust big news outlets. When those outlets repeat one-sided stories, it can make wrong ideas seem true.</p>
-      <p>Research shows images, headlines, and what facts are left out can change readers' attitudes. The charts on this page show how different media approaches in immigration can shift opinions (Hopkins 2018).</p>
+      <p>Research shows images, headlines, and what facts are left out can change readers' attitudes. The charts on this page show how different media approaches in immigration can shift opinions <span class="highlight">(Hopkins 2018)</span>.</p>
       <p>Pictures and strong words that aim to shock or frighten readers can push feelings toward anger or fear. Journalists should show facts and also share humane stories that respect people.</p>
       
       <div class="chart-container" role="region" aria-labelledby="framingChartLabel">
@@ -369,7 +627,7 @@
         <canvas id="framingChart" role="img" aria-describedby="framingChartDesc"></canvas>
         <p id="framingChartDesc" class="sr-only">Bar chart showing opinion change percentages across four approaches: Factual Information Only (15%), Emotional Framing (45%), Negative Imagery (58%), and Crisis-Focused Headlines (72%).</p>
       </div>
-      <p style="font-size:14px;color:var(--muted);text-align:center;margin-top:12px;">Based on research from Hopkins (2018) and ACLU analysis</p>
+      <p style="font-size:14px;color:var(--text-muted);text-align:center;margin-top:12px;">Based on research from Hopkins (2018) and ACLU analysis</p>
     </section>
 
     <section class="card">
@@ -378,6 +636,7 @@
         <div class="research-box">
           <h3>📋 ACLU Findings</h3>
           <p>Media often uses words and images that make immigrants seem less human instead of showing their full stories and why they left their country to come to the States. Joshi (2024) points out three common ways bias appears: using loaded words, showing emotional images, and picking only examples that fit a single idea.</p>
+          <a href="https://www.aclu.org/news/immigrants-rights/three-ways-the-media-introduces-bias-to-the-immigration-debate" target="_blank" rel="noopener noreferrer" class="source-link">View ACLU Article →</a>
         </div>
         <div class="research-box">
           <h3>🎓 Research Evidence</h3>
@@ -393,22 +652,22 @@
         <canvas id="perceptionChart" role="img" aria-describedby="perceptionChartDesc"></canvas>
         <p id="perceptionChartDesc" class="sr-only">Bar chart comparing public perception and research reality across Crime Rate Impact, Economic Contribution, Use of Public Benefits, and Education Investment.</p>
       </div>
-      <p style="font-size:14px;color:var(--muted);text-align:center;margin-top:12px;">Common misconceptions vs. research-backed facts</p>
+      <p style="font-size:14px;color:var(--text-muted);text-align:center;margin-top:12px;">Common misconceptions vs. research-backed facts</p>
     </section>
 
     <section class="card">
       <h2>Historical Context</h2>
-      <p>News and politics have shaped U.S. immigration debates for a long time. Laws such as the Chinese Exclusion Act and changes in 1965 were influenced by public opinion and by how the story was told in the news (Jiménez, 2016; Vox, 2019).</p>
+      <p>News and politics have shaped U.S. immigration debates for a long time. Laws such as the Chinese Exclusion Act and changes in 1965 were influenced by public opinion and by how the story was told in the news <span class="highlight">(Jiménez, 2016; Vox, 2019)</span>.</p>
       <p>Historians show this pattern keeps repeating: how the media frames an issue can change what people believe, and that can lead to new laws.</p>
       <p>When news reports are more negative, support for stricter immigration rules often increases.</p>
-      <p>Recognizing history’s human cost reminds journalists and readers that policy choices impact real people and families across generations.</p>
+      <p>Recognizing history's human cost reminds journalists and readers that policy choices impact real people and families across generations.</p>
       
       <div class="chart-container" role="region" aria-labelledby="historyChartLabel">
         <h3 id="historyChartLabel" class="sr-only">Historical trends and media narratives</h3>
         <canvas id="historyChart" role="img" aria-describedby="historyChartDesc"></canvas>
         <p id="historyChartDesc" class="sr-only">Line chart showing Negative Media Coverage and Restrictive Policy Sentiment over time from 1882 through 2024.</p>
       </div>
-      <p style="font-size:14px;color:var(--muted);text-align:center;margin-top:12px;">Timeline of major U.S. immigration policy influenced by media narratives</p>
+      <p style="font-size:14px;color:var(--text-muted);text-align:center;margin-top:12px;">Timeline of major U.S. immigration policy influenced by media narratives</p>
     </section>
 
     <section class="card">
@@ -416,12 +675,12 @@
       
       <div class="image-grid">
           <figure>
-            <img src="flags.jpg" alt="Flags and banners in El Paso representing community identity" loading="lazy" decoding="async" style="width:100%;height:250px;object-fit:cover;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-            <figcaption style="font-size:13px;color:var(--muted);margin-top:8px;text-align:center;">Community flags and banners in El Paso</figcaption>
+            <img src="flags.jpg" alt="Flags and banners in El Paso representing community identity" loading="lazy" decoding="async" style="width:100%;height:250px;object-fit:cover;">
+            <figcaption>Community flags and banners in El Paso</figcaption>
           </figure>
           <figure>
-            <img src="food.webp" alt="Local food vendor and community foods near the El Paso border" loading="lazy" decoding="async" style="width:100%;height:250px;object-fit:cover;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-            <figcaption style="font-size:13px;color:var(--muted);margin-top:8px;text-align:center;">Local food vendors and community cuisine</figcaption>
+            <img src="food.webp" alt="Local food vendor and community foods near the El Paso border" loading="lazy" decoding="async" style="width:100%;height:250px;object-fit:cover;">
+            <figcaption>Local food vendors and community cuisine</figcaption>
           </figure>
       </div>
       
@@ -437,7 +696,7 @@
       <div class="quote">"The news makes us look bad. They never show the good things about our community."</div>
       <div class="quote">"Sometimes I feel judged because of what people see online. They don't know our real stories."</div>
       <div class="quote">"I wish media showed immigrants with more respect and dignity. We're people, not statistics."</div>
-      <p style="margin-top:20px;font-size:14px;color:var(--muted);"><em>Interviews conducted in El Paso, Texas as part of community fieldwork</em></p>
+      <p style="margin-top:20px;font-size:14px;color:var(--text-muted);"><em>Interviews conducted in El Paso, Texas as part of community fieldwork</em></p>
     </section>
 
     <section class="card">
@@ -453,7 +712,7 @@
         <canvas id="impactChart" role="img" aria-describedby="impactChartDesc"></canvas>
         <p id="impactChartDesc" class="sr-only">Radar chart showing negative impact levels for Discrimination (78), Economic Opportunity (65), Mental Health (82), Community Trust (58), Youth Self-Image (85), and Political Participation (52).</p>
       </div>
-      <p style="font-size:14px;color:var(--muted);text-align:center;margin-top:12px;">Real impacts of biased media coverage on border communities</p>
+      <p style="font-size:14px;color:var(--text-muted);text-align:center;margin-top:12px;">Real impacts of biased media coverage on border communities</p>
     </section>
 
     <section class="card">
@@ -487,12 +746,12 @@
       <p style="margin-bottom:20px;"><strong>Academic & Research Sources:</strong></p>
       <ul class="reference-list">
         <li>Abrajano, M., Hajnal, Z., & Hassell, H. J. (2017). Media framing and partisan identity: The case of immigration coverage and white macro partisanship. <em>Journal of Race, Ethnicity, and Politics</em>.</li>
-        <li>Hopkins, D. J. (2018). The muted consequences of correct information about immigration. SSRN. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2798622" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2798622</a></li>
-        <li>Jiménez, T. R. (2016, February 18). U.S. immigration, past and present [Lecture]. YouTube. <a href="https://www.youtube.com/watch?v=IU534zPN5Zk" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">https://www.youtube.com/watch?v=IU534zPN5Zk</a></li>
-        <li>Joshi, A. (2024, October 7). Three ways the media introduces bias to the immigration debate. American Civil Liberties Union. <a href="https://www.aclu.org/news/immigrants-rights/three-ways-the-media-introduces-bias-to-the-immigration-debate" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">View Article</a></li>
-        <li>PBS NewsHour. (2019, June 10). Why we are so susceptible to misinformation [Video]. YouTube. <a href="https://www.youtube.com/watch?v=WPuCnkMF19g" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">https://www.youtube.com/watch?v=WPuCnkMF19g</a></li>
-        <li>VICE News. (2019). Border to Border [Playlist]. YouTube. <a href="https://www.youtube.com/playlist?list=PLw613M86o5o6XgKBGGKsHdpW6h-sThGxI" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">View Playlist</a></li>
-        <li>Vox. (2019, October 3). The racist history of U.S. immigration policy [Video]. YouTube. <a href="https://www.youtube.com/watch?v=6yiQAmgI5s4" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">https://www.youtube.com/watch?v=6yiQAmgI5s4</a></li>
+        <li>Hopkins, D. J. (2018). The muted consequences of correct information about immigration. SSRN. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2798622" target="_blank" rel="noopener noreferrer">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2798622</a></li>
+        <li>Jiménez, T. R. (2016, February 18). U.S. immigration, past and present [Lecture]. YouTube. <a href="https://www.youtube.com/watch?v=IU534zPN5Zk" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=IU534zPN5Zk</a></li>
+        <li>Joshi, A. (2024, October 7). Three ways the media introduces bias to the immigration debate. American Civil Liberties Union. <a href="https://www.aclu.org/news/immigrants-rights/three-ways-the-media-introduces-bias-to-the-immigration-debate" target="_blank" rel="noopener noreferrer">View Article</a></li>
+        <li>PBS NewsHour. (2019, June 10). Why we are so susceptible to misinformation [Video]. YouTube. <a href="https://www.youtube.com/watch?v=WPuCnkMF19g" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=WPuCnkMF19g</a></li>
+        <li>VICE News. (2019). Border to Border [Playlist]. YouTube. <a href="https://www.youtube.com/playlist?list=PLw613M86o5o6XgKBGGKsHdpW6h-sThGxI" target="_blank" rel="noopener noreferrer">View Playlist</a></li>
+        <li>Vox. (2019, October 3). The racist history of U.S. immigration policy [Video]. YouTube. <a href="https://www.youtube.com/watch?v=6yiQAmgI5s4" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=6yiQAmgI5s4</a></li>
       </ul>
       
       <p style="margin-top:24px;"><strong>Community Voices:</strong></p>
@@ -509,7 +768,11 @@
   </footer>
 
   <script>
-    // Chart 1: Media Framing Impact
+    // Update Chart.js to match the new color scheme
+    Chart.defaults.color = '#b0b0c0';
+    Chart.defaults.borderColor = '#3a3a4a';
+    
+    // Chart 1: Media Framing Impact - Using chart color palette
     const framingCtx = document.getElementById('framingChart').getContext('2d');
     new Chart(framingCtx, {
       type: 'bar',
@@ -519,42 +782,59 @@
           label: 'Opinion Change (%)',
           data: [15, 45, 58, 72],
           backgroundColor: [
-            'rgba(75, 192, 192, 0.7)',
-            'rgba(255, 206, 86, 0.7)',
-            'rgba(255, 159, 64, 0.7)',
-            'rgba(255, 99, 132, 0.7)'
+            'rgba(255, 107, 157, 0.7)',
+            'rgba(157, 74, 255, 0.7)',
+            'rgba(74, 255, 157, 0.7)',
+            'rgba(255, 157, 74, 0.7)'
           ],
           borderColor: [
-            'rgba(75, 192, 192, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(255, 99, 132, 1)'
+            'rgba(255, 107, 157, 1)',
+            'rgba(157, 74, 255, 1)',
+            'rgba(74, 255, 157, 1)',
+            'rgba(255, 157, 74, 1)'
           ],
-          borderWidth: 2
+          borderWidth: 2,
+          borderRadius: 6
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false },
+          legend: { 
+            display: false 
+          },
           title: {
             display: true,
             text: 'How Different Media Approaches Influence Opinion',
-            font: { size: 16, weight: 'bold' }
+            font: { size: 16, weight: 'bold' },
+            color: '#e6e6e6'
           }
         },
         scales: {
           y: {
             beginAtZero: true,
             max: 100,
-            ticks: { callback: value => value + '%' }
+            ticks: { 
+              callback: value => value + '%'
+            },
+            grid: {
+              color: 'rgba(255,255,255,0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#b0b0c0'
+            },
+            grid: {
+              color: 'rgba(255,255,255,0.1)'
+            }
           }
         }
       }
     });
 
-    // Chart 2: Perception vs Reality
+    // Chart 2: Perception vs Reality - Different contrasting colors
     const perceptionCtx = document.getElementById('perceptionChart').getContext('2d');
     new Chart(perceptionCtx, {
       type: 'bar',
@@ -563,39 +843,60 @@
         datasets: [{
           label: 'Public Perception',
           data: [65, 25, 70, 30],
-          backgroundColor: 'rgba(255, 99, 132, 0.7)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 2
+          backgroundColor: 'rgba(255, 157, 74, 0.7)',
+          borderColor: 'rgba(255, 157, 74, 1)',
+          borderWidth: 2,
+          borderRadius: 6
         }, {
           label: 'Research Reality',
           data: [10, 78, 35, 82],
-          backgroundColor: 'rgba(75, 192, 192, 0.7)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 2
+          backgroundColor: 'rgba(74, 255, 157, 0.7)',
+          borderColor: 'rgba(74, 255, 157, 1)',
+          borderWidth: 2,
+          borderRadius: 6
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'top' },
+          legend: { 
+            position: 'top',
+            labels: {
+              color: '#e6e6e6'
+            }
+          },
           title: {
             display: true,
             text: 'Public Misconceptions vs. Evidence-Based Reality',
-            font: { size: 16, weight: 'bold' }
+            font: { size: 16, weight: 'bold' },
+            color: '#e6e6e6'
           }
         },
         scales: {
           y: {
             beginAtZero: true,
             max: 100,
-            ticks: { callback: value => value + '%' }
+            ticks: { 
+              callback: value => value + '%'
+            },
+            grid: {
+              color: 'rgba(255,255,255,0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#b0b0c0'
+            },
+            grid: {
+              color: 'rgba(255,255,255,0.1)'
+            }
           }
         }
       }
     });
 
-    // Chart 3: Historical Timeline
+    // Chart 3: Historical Timeline - Purple and pink theme
     const historyCtx = document.getElementById('historyChart').getContext('2d');
     new Chart(historyCtx, {
       type: 'line',
@@ -604,41 +905,62 @@
         datasets: [{
           label: 'Negative Media Coverage (%)',
           data: [75, 68, 35, 42, 55, 72, 48, 85, 62],
-          borderColor: 'rgba(255, 99, 132, 1)',
-          backgroundColor: 'rgba(255, 99, 132, 0.1)',
+          borderColor: 'rgba(255, 107, 157, 1)',
+          backgroundColor: 'rgba(255, 107, 157, 0.1)',
           tension: 0.4,
-          fill: true
+          fill: true,
+          borderWidth: 3
         }, {
           label: 'Restrictive Policy Sentiment (%)',
           data: [80, 72, 30, 38, 58, 78, 52, 88, 65],
-          borderColor: 'rgba(54, 162, 235, 1)',
-          backgroundColor: 'rgba(54, 162, 235, 0.1)',
+          borderColor: 'rgba(157, 74, 255, 1)',
+          backgroundColor: 'rgba(157, 74, 255, 0.1)',
           tension: 0.4,
-          fill: true
+          fill: true,
+          borderWidth: 3
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'top' },
+          legend: { 
+            position: 'top',
+            labels: {
+              color: '#e6e6e6'
+            }
+          },
           title: {
             display: true,
             text: 'Media Narratives and Immigration Policy Over Time',
-            font: { size: 16, weight: 'bold' }
+            font: { size: 16, weight: 'bold' },
+            color: '#e6e6e6'
           }
         },
         scales: {
           y: {
             beginAtZero: true,
             max: 100,
-            ticks: { callback: value => value + '%' }
+            ticks: { 
+              callback: value => value + '%'
+            },
+            grid: {
+              color: 'rgba(255,255,255,0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#b0b0c0'
+            },
+            grid: {
+              color: 'rgba(255,255,255,0.1)'
+            }
           }
         }
       }
     });
 
-    // Chart 4: Community Impact
+    // Chart 4: Community Impact - Multi-colored radar
     const impactCtx = document.getElementById('impactChart').getContext('2d');
     new Chart(impactCtx, {
       type: 'radar',
@@ -647,13 +969,14 @@
         datasets: [{
           label: 'Negative Impact Level',
           data: [78, 65, 82, 58, 85, 52],
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: 'rgba(157, 74, 255, 0.2)',
+          borderColor: 'rgba(157, 74, 255, 1)',
           borderWidth: 2,
-          pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+          pointBackgroundColor: 'rgba(255, 107, 157, 1)',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(255, 99, 132, 1)'
+          pointHoverBorderColor: 'rgba(255, 107, 157, 1)',
+          pointRadius: 4
         }]
       },
       options: {
@@ -664,14 +987,26 @@
           title: {
             display: true,
             text: 'Impact of Biased Coverage on Border Communities',
-            font: { size: 16, weight: 'bold' }
+            font: { size: 16, weight: 'bold' },
+            color: '#e6e6e6'
           }
         },
         scales: {
           r: {
             beginAtZero: true,
             max: 100,
-            ticks: { stepSize: 20 }
+            ticks: { 
+              stepSize: 20
+            },
+            grid: {
+              color: 'rgba(255,255,255,0.1)'
+            },
+            angleLines: {
+              color: 'rgba(255,255,255,0.1)'
+            },
+            pointLabels: {
+              color: '#e6e6e6'
+            }
           }
         }
       }
